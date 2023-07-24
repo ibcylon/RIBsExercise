@@ -124,6 +124,10 @@ final class SuperPayDashboardViewController: UIViewController, SuperPayDashboard
 
   }
 
+  func updateBalance(_ balance: String) {
+    balanceAmoutLabel.text = balance
+  }
+
 
 
 }
