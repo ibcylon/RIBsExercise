@@ -7,7 +7,7 @@ protocol FinanceHomeDependency: Dependency {
 
 // 자식들의 Riblet을 conform하도록 해줘야 함. component는 바구니의 역할
 
-final class FinanceHomeComponent: Component<FinanceHomeDependency>, SuperPayDashboardDependency, CardOnFileDashboardDependency {
+final class FinanceHomeComponent: Component<FinanceHomeDependency>, SuperPayDashboardDependency, CardOnFileDashboardDependency, AddPaymentMethodDependency {
   let cardOnFileRepository: CardOnFileRepository
   var balance: ReadOnlyCurrentValuePublisher<Double> { balancePublisher }
   private let balancePublisher: CurrentValuePublisher<Double>
@@ -15,6 +15,7 @@ final class FinanceHomeComponent: Component<FinanceHomeDependency>, SuperPayDash
   init(dependency: FinanceHomeDependency,
        balancePublisher: CurrentValuePublisher<Double>,
        cardOnFileRepository: CardOnFileRepository
+
   ) {
     self.balancePublisher = balancePublisher
     self.cardOnFileRepository = cardOnFileRepository
@@ -47,11 +48,14 @@ final class FinanceHomeBuilder: Builder<FinanceHomeDependency>, FinanceHomeBuild
 
     let superPayDashboardBuilder = SuperPayDashboardBuilder(dependency: component)
     let cardOnFileDashboardBuilder = CardOnFileDashboardBuilder(dependency: component)
+    let addPaymentMethodBuilder = AddPaymentMethodBuilder(dependency: component)
+
     return FinanceHomeRouter(
       interactor: interactor,
       viewController: viewController,
       superPayDashboardBuildable: superPayDashboardBuilder,
-      cardOnFileDashboardBuildable: cardOnFileDashboardBuilder
+      cardOnFileDashboardBuildable: cardOnFileDashboardBuilder,
+      addPaymentMethodBuildable: addPaymentMethodBuilder
     )
   }
 }

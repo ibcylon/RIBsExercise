@@ -9,9 +9,7 @@ import ModernRIBs
 import UIKit
 
 protocol CardOnFileDashboardPresentableListener: AnyObject {
-  // TODO: Declare properties and methods that the view controller can invoke to perform
-  // business logic, such as signIn(). This protocol is implemented by the corresponding
-  // interactor class.
+  func addPaymentMethodDidTap()
 }
 
 final class CardOnFileDashboardViewController: UIViewController, CardOnFileDashboardPresentable, CardOnFileDashboardViewControllable {
@@ -63,7 +61,6 @@ final class CardOnFileDashboardViewController: UIViewController, CardOnFileDashb
     return button
   }()
 
-
   init() {
     super.init(nibName: nil, bundle: nil)
 
@@ -96,16 +93,6 @@ final class CardOnFileDashboardViewController: UIViewController, CardOnFileDashb
     ])
   }
 
-  @objc
-  func seeAllButtonDidTap(_ sender: UIButton) {
-
-  }
-
-  @objc
-  func addPaymentMethodButtonDidTap() {
-
-  }
-
   func update(with viewModels: [PaymentMethodViewModel]) {
     cardOnFileStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
@@ -122,5 +109,15 @@ final class CardOnFileDashboardViewController: UIViewController, CardOnFileDashb
 
     NSLayoutConstraint.activate(heightConstraints)
     
+  }
+
+  @objc
+  func seeAllButtonDidTap(_ sender: UIButton) {
+
+  }
+
+  @objc
+  func addPaymentMethodButtonDidTap() {
+    listener?.addPaymentMethodDidTap()
   }
 }
