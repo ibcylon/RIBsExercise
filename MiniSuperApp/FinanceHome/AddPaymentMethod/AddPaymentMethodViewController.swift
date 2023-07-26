@@ -9,7 +9,8 @@ import ModernRIBs
 import UIKit
 
 protocol AddPaymentMethodPresentableListener: AnyObject {
-    func didTapClose()
+  func didTapClose()
+  func didTapAddCard(number: String, cvc: String, expiry: String)
 }
 
 final class AddPaymentMethodViewController: UIViewController, AddPaymentMethodPresentable, AddPaymentMethodViewControllable {
@@ -61,7 +62,7 @@ final class AddPaymentMethodViewController: UIViewController, AddPaymentMethodPr
     button.backgroundColor = .primaryRed
     button.setTitleColor(.white, for: .normal)
     button.setTitle("추가하기", for: .normal)
-    button.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
+    button.addTarget(self, action: #selector(didTapAddCard), for: .touchUpInside)
     return button
   }()
 
@@ -114,8 +115,14 @@ final class AddPaymentMethodViewController: UIViewController, AddPaymentMethodPr
   }
 
   @objc
-  func addButtonDidTap() {
-
+  func didTapAddCard() {
+    guard let cardNumber = cardNumberTextField.text,
+          let cvcCode = securityTextField.text,
+          let expiration = expirationTextField.text
+    else {
+      return
+    }
+    listener?.didTapAddCard(number: cardNumber, cvc: cvcCode, expiry: expiration)
   }
 
   // 부모가 책임지고 자식의 뷰컨트롤러의 생명주기를 관리할 수 있게 되어 좋다.

@@ -57,4 +57,8 @@ final class FinanceHomeInteractor: PresentableInteractor<FinanceHomePresentable>
   func addPaymentMethodDidTapClose() {
     router?.detachAddPaymentMethod()
   }
+
+  func addPaymentMethodDidAddCard(method: PaymentMethod) {
+    router?.detachAddPaymentMethod()
+  }
 }
