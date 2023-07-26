@@ -85,7 +85,7 @@ final class EnterAmountViewController: UIViewController, EnterAmountPresentable,
     view.backgroundColor = .backgroundColor
 
 //    setupNavigationItem(with: .close, target: self, action: #selector(didTapClose))
-    setupNavigationItem(target: self, action: #selector(didTapClose))
+    setupNavigationItem(with: .close, target: self, action: #selector(didTapClose))
     view.addSubview(selectedPaymentMethodView)
     view.addSubview(enterAmountWidget)
     view.addSubview(ctaButton)
