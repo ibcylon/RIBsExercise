@@ -1,6 +1,6 @@
 import ModernRIBs
 
-protocol FinanceHomeInteractable: Interactable, SuperPayDashboardListener, CardOnFileDashboardListener, AddPaymentMethodListener {
+protocol FinanceHomeInteractable: Interactable, SuperPayDashboardListener, CardOnFileDashboardListener, AddPaymentMethodListener, TopupListener {
   var router: FinanceHomeRouting? { get set }
   var listener: FinanceHomeListener? { get set }
   var presentationDelegateProxy: AdaptivePresentaionControllerDelegateProxy { get }
@@ -21,16 +21,20 @@ final class FinanceHomeRouter: ViewableRouter<FinanceHomeInteractable, FinanceHo
   let addPaymentMethodBuildable: AddPaymentMethodBuildable
   private var addPaymentMethodRouting: Routing?
 
+  let topupBuildable: TopupBuildable
+  private var topupRouting: Routing?
 
   init(interactor: FinanceHomeInteractable,
        viewController: FinanceHomeViewControllable,
        superPayDashboardBuildable: SuperPayDashboardBuildable,
        cardOnFileDashboardBuildable: CardOnFileDashboardBuildable,
-       addPaymentMethodBuildable: AddPaymentMethodBuildable
+       addPaymentMethodBuildable: AddPaymentMethodBuildable,
+       topupBuildable: TopupBuildable
   ) {
     self.superPayDashboardBuildable = superPayDashboardBuildable
     self.cardOnFileDashboardBuildable = cardOnFileDashboardBuildable
     self.addPaymentMethodBuildable = addPaymentMethodBuildable
+    self.topupBuildable = topupBuildable
     super.init(interactor: interactor, viewController: viewController)
     interactor.router = self
   }
@@ -81,5 +85,21 @@ final class FinanceHomeRouter: ViewableRouter<FinanceHomeInteractable, FinanceHo
     detachChild(router)
 
     addPaymentMethodRouting = nil
+  }
+
+  func attachTopup() {
+    if topupRouting != nil { return }
+    let router = topupBuildable.build(withListener: interactor)
+
+    // viewControllable이 없기 때문에 붙일 필요 없음
+    self.topupRouting = router
+    attachChild(router)
+  }
+
+  func detachTopup() {
+    guard let router = topupRouting else { return }
+    detachChild(router)
+
+    topupRouting = nil
   }
 }
