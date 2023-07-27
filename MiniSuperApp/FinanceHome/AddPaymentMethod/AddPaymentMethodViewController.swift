@@ -17,14 +17,17 @@ final class AddPaymentMethodViewController: UIViewController, AddPaymentMethodPr
 
   weak var listener: AddPaymentMethodPresentableListener?
 
-  init() {
+  init(closeButtonType: DismissButtonType) {
     super.init(nibName: nil, bundle: nil)
 
+    setupNavigationItem(with: closeButtonType, target: self, action: #selector(didTapClose))
     setupViews()
   }
 
   required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    super.init(coder: coder)
+    setupViews()
+    setupNavigationItem(with: .close, target: self, action: #selector(didTapClose))
   }
 
   private let cardNumberTextField: UITextField = {
@@ -78,7 +81,7 @@ final class AddPaymentMethodViewController: UIViewController, AddPaymentMethodPr
   private func setupViews() {
     title = "카드 추가"
 
-    setupNavigationItem(with: .close,target: self, action: #selector(didTapClose))
+
 
     view.backgroundColor = .backgroundColor
     view.addSubview(cardNumberTextField)

@@ -18,7 +18,7 @@ final class CardOnFileRepositoryImp: CardOnFileRepository {
   var cardOnFile: ReadOnlyCurrentValuePublisher<[PaymentMethod]> { cardOnFileSubject }
 
   private let cardOnFileSubject = CurrentValuePublisher<[PaymentMethod]>([
-      PaymentMethod(id: "0", name: "우리은행", digits: "8888", color: "#f19138ff", isPrimary: false), 
+//      PaymentMethod(id: "0", name: "우리은행", digits: "8888", color: "#f19138ff", isPrimary: false), 
 //      PaymentMethod(id: "3", name: "토스은행", digits: "8888", color: "#f19138ff", isPrimary: false),
 //      PaymentMethod(id: "4", name: "카카오은행", digits: "8888", color: "#f19138ff", isPrimary: false),
     ])

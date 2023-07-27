@@ -64,7 +64,7 @@ final class FinanceHomeRouter: ViewableRouter<FinanceHomeInteractable, FinanceHo
 
   func attachAddPaymentMethod() {
     if addPaymentMethodRouting != nil { return }
-    let router = addPaymentMethodBuildable.build(withListener: interactor)
+    let router = addPaymentMethodBuildable.build(withListener: interactor, closeButtonType: .close)
 
     // viewController, viewControllable 모두 UI객체가 아니기 때문에 present method가 없다.
     // 립스 전역에서 쓰이는 메소드이기 때문에 RIBS.Utills에 추가되어 있음.
