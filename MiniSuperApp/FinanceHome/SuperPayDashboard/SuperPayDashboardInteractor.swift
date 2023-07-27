@@ -57,7 +57,9 @@ final class SuperPayDashboardInteractor: PresentableInteractor<SuperPayDashboard
 
     // RIBS에서 UI관련은 프레젠터를 호출하여 명령한다.
     // presenter가 self에 있으니까 [weak self] 선언
-    dependency.balance.sink { [weak self] balance in
+    dependency.balance
+      .receive(on: DispatchQueue.main)
+      .sink { [weak self] balance in
       self?.dependency.balanceFormatter.string(from: NSNumber(value: balance)).map {
         self?.presenter.updateBalance($0)
       }
